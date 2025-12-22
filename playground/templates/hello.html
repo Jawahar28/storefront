@@ -1,0 +1,21 @@
+<html>
+
+<body>
+    {% if name %}
+    <h1>Hello {{ name }}!</h1>
+    {% else %}
+    <h1>Hello, World!</h1>
+    {% endif %}
+    <ul>
+        {% for product in products %}
+        <!-- <li>{{ product.title }} - ${{ product.unit_price }}</li>-->
+        <li> {{ product.title }}</li>
+
+        <!-- Selecting Related Fields -->
+        <!-- To Show if there are any extra tables it will take some time by the browser
+        <li>{{ product.title }} - {{ product.collection.title }}</li> -->
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
