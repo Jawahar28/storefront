@@ -239,12 +239,12 @@ def say_hello(request):
     return render(request, 'hello.html', {'name':'Jawahar', 'result':list(queryset)})'''
 
     # 2. We can use connection when we want to retrieve the data that is not present in our database
-   ''' with connection.cursor() as cursor:
+    '''with connection.cursor() as cursor:
         cursor.execute('') # Here we can use insert, select, update, delete
 
     return render(request, 'hello.html', {'name': 'Jawahar', 'result': list(queryset)})'''
 
-    
+
 
     
 

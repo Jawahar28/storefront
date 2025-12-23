@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
 
+admin.site.site_header = "Storefront Admin"
+admin.site.index_title = "Admin"
+
+
 def home(request):
     return HttpResponse("Welcome to Storefront!")
 
