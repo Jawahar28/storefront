@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 
@@ -25,12 +26,14 @@ class Product(models.Model): # Inheriting the model.Model class from Django
     # Feilds of this class
     title = models.CharField(max_length=100)
     slug = models.SlugField()
-    description = models.TextField()
-    unit_price = models.DecimalField(max_digits = 10, decimal_places = 2)
+    description = models.TextField(null=True, blank=True)
+    unit_price = models.DecimalField(max_digits = 10, 
+                                    decimal_places = 2, 
+                                    validators = [MinValueValidator(1)])
     inventory =  models.IntegerField()
     last_update = models.DateTimeField(auto_now = True)
     collection = models.ForeignKey(Collection, on_delete= models.PROTECT)
-    promotions = models.ManyToManyField(Promotion) # related_name= 'products' Here related_name is used as alternative name for understanding
+    promotions = models.ManyToManyField(Promotion, blank=True) # related_name= 'products' Here related_name is used as alternative name for understanding
 
     '''def __str__(self):
         return self.title'''
