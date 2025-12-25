@@ -35,8 +35,8 @@ class Product(models.Model): # Inheriting the model.Model class from Django
     collection = models.ForeignKey(Collection, on_delete= models.PROTECT)
     promotions = models.ManyToManyField(Promotion, blank=True) # related_name= 'products' Here related_name is used as alternative name for understanding
 
-    '''def __str__(self):
-        return self.title'''
+    def __str__(self):
+        return self.title
 
     '''class Meta:
         ordering = ['title']  '''  

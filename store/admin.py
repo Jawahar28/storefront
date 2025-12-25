@@ -4,6 +4,8 @@ from django.db.models import Count, QuerySet
 from django.http import HttpResponse
 from django.utils.html import format_html, urlencode, format_html_join
 from django.urls import reverse
+from django.contrib.contenttypes.admin import GenericTabularInline
+from tags.models import TaggedItem
 
 
 # Register your models here.
@@ -74,10 +76,10 @@ class ProductAdmin(admin.ModelAdmin):
             return 'LOW'
         return "OK"'''
 
-@admin.register(models.Order)
+'''@admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'placed_at', 'customer']
-    list_per_page = 20
+    list_per_page = 20'''
 
 #<------------------------------------------------------------------------------------------------------------------->
 
@@ -332,6 +334,8 @@ class InventoryFilter(admin.SimpleListFilter):
         if self.value() == '<10':
            return queryset.filter(inventory__lt=10)
 
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin): 
     # fields = ['title','slug'] # It helps to show the presented fields only
@@ -351,6 +355,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['collection', 'last_update', InventoryFilter]
     list_per_page = 100 # pagination
     list_select_related = ['collection']
+    search_fields = ['title']
+    # inlines = [TagInline]
 
     def collection_title(self,product):
         return product.collection.title
@@ -373,4 +379,15 @@ class ProductAdmin(admin.ModelAdmin):
 
 #<------------------------------------------------------------------------------------------------------------------->
 
+# Editing children using inlines
 
+class OrderItemInline(admin.TabularInline):
+    autocomplete_fields = ['product']
+    model = models.OrderItem
+
+@admin.register(models.Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'placed_at', 'customer']
+    autocomplete_fields = ['customer']
+    inlines = [OrderItemInline]
+    list_per_page = 20
